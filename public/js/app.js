@@ -65,7 +65,6 @@ app.controller('IndexController', ['$scope','$http', 'Spotify', function($scope,
 
     $scope.addToPlaylist = function(songObj){
         $scope.playlist.songs[songObj.id] = songObj;
-        $scope.data.style = "display:inline";
     };
 
     $scope.rmFromPlaylist = function(songId){
@@ -74,7 +73,6 @@ app.controller('IndexController', ['$scope','$http', 'Spotify', function($scope,
 
     //save to db
     $scope.save = function(){
-        console.log($scope.playlist);
         $http({
 		method: "POST",
 		url: "/playlist",
@@ -82,12 +80,7 @@ app.controller('IndexController', ['$scope','$http', 'Spotify', function($scope,
 			'Content-Type': 'application/json'
 		},
 		data: $scope.playlist
-	}).then(function(req, res){
-		console.log(JSON.stringify(req));
-	});;
-	//$http.post("/playlist", $scope.playlist).success(function(res){
-        //    console.log("new: " + JSON.stringify(res));
-       // });
+	});
     };
 
     $scope.encodeJSON = function(playlist) {
