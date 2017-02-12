@@ -61,6 +61,10 @@ app.controller('IndexController', ['$scope','$http', 'Spotify', function($scope,
 
             });
         }
+	    
+	else {
+		$cope.data.tracks = "";	
+	}
     });
 
     $scope.addToPlaylist = function(songObj){
