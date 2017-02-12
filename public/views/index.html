@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Using Spotify API</title>
+    <script src="/js/lib/angular.min.js"></script>
+    <script src="/js/lib/angular-route.js"></script>
+    <script src="/js/lib/angular-spotify.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+     <style>
+        .buffer{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body ng-app="spotMe">
+
+    <div ng-controller="IndexController">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Search for artist, song, or playlist:</h3>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search Spotify" aria-describedby="basic-addon2" ng-model="data.input">
+                        <div class="input-group-addon" style="background-color:#FFFFFF">
+                            <span class="glyphicon glyphicon-search" ></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row buffer">
+                <div class="col-md-4 col-xs-12" ng-repeat="items in data.tracks">
+                    <div style="min-height: 200px;">
+                        <ul class="media-list" >
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img src="{{items.customImage}}" width="100px"/>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        {{items.track}}
+                                    </h4>
+                                    <p>
+                                        {{items.artist}}
+                                    </p>
+                                    <button type="button" ng-click="addToPlaylist(items)" class="btn btn-success" aria-label="Add to Playlist">
+                                        Add to Playlist <span class="glyphicon glyphicon-plus" aria-hidden="false"></span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row buffer">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                                Playlist Name
+                        </span>
+                        <input type="text" class="form-control" placeholder="Enter Playlist Name: " aria-describedby="basic-addon2" ng-model="playlist.playlistName">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" ng-click="save();">Save</button>
+                    </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row buffer">
+                <div class="col-md-4 col-xs-12" ng-repeat="items in playlist.songs">
+                    <div style="min-height: 200px;">
+                        <ul class="media-list" >
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img src="{{items.customImage}}" width="150px"/>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        {{items.track}}
+                                    </h4>
+                                    <p>
+                                        {{items.artist}}
+                                    </p>
+                                    <button type="button" ng-click="rmFromPlaylist(items.id)" class="btn btn-danger" aria-label="Remove from Playlist">
+                                        Remove from Playlist <span class="glyphicon glyphicon-minus" aria-hidden="false"></span>
+                                    </button>
+                                    <div class="input-group buffer">
+                                        <span class="input-group-addon">
+                                            Note:
+                                        </span>
+                                        <input type="text" class="form-control" placeholder="Add note?" ng-value="items.note" aria-describedby="basic-addon2" ng-model="playlist.songs[items.id].comment">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row buffer">
+                <div class="col-md-12">
+		<a  href="data:text/json;charset=utf-8,{{encodeJSON(playlist)}}" download="playlist.txt">
+                    <button type="button"  class="btn btn-primary" aria-label="export playlist" >
+                        Export Playlist <span class="glyphicon glyphicon-download" aria-hidden="false"></span>
+                    </button>
+                </a>
+</div>
+            </div>
+</div>
+    </div>
+
+</body>
+
+</html>

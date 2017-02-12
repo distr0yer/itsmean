@@ -1,0 +1,21 @@
+{
+  "name": "dobemean",
+  "version": "1.0.0",
+  "description": "Spotify API Manipulation",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.6.2",
+    "angular-route": "^1.6.2",
+    "angular-spotify": "^1.4.1",
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
+    "method-override": "^2.3.7",
+    "mongojs": "^2.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "author": "Kel Santiago",
+  "license": "ISC"
+}
