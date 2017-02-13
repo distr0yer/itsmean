@@ -19,19 +19,50 @@
         .buffer{
             margin-top: 20px;
         }
+	.alert-header {
+	    top: 10px;
+	    position: fixed;
+	    z-index: 100;
+	    width: 60%;
+	    left: 20%;
+	}
     </style>
+    <script>
+	$(function(){
+		$("#success-alert-play, #success-alert-savelist").hide();
+		$(document).on("click", ".addToPlaylist", function(){
+               		$("#success-alert-play").alert();
+      			$("#success-alert-play").fadeTo(2000, 500).slideUp(500, function(){
+				$("#success-alert-play").slideUp(500);
+      			});
+		});
+		$(".savelist").on("click", function(){
+                        $("#success-alert-savelist").alert();
+                        $("#success-alert-savelist").fadeTo(2000, 500).slideUp(500, function(){
+                                $("#success-alert-play").slideUp(500);
+                        });
+                });
+
+	});
+    </script>
 </head>
 
 <body ng-app="spotMe">
 
     <div ng-controller="IndexController">
         <div class="container">
+            <div class="alert alert-success alert-header" id="success-alert-play">
+	 	<strong>Success!</strong> Song added to playlist below.
+	    </div>
+            <div class="alert alert-success alert-header" id="success-alert-savelist">
+              <strong>Success!</strong> Playlist saved..
+	    </div>
             <div class="row">
                 <div class="col-md-12">
                     <h3>Search for artist, song, or playlist:</h3>
 
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search Spotify" aria-describedby="basic-addon2" ng-model="data.input">
+                        <input type="text" class="form-control searcher" placeholder="Search Spotify" aria-describedby="basic-addon2" ng-model="data.input">
                         <div class="input-group-addon" style="background-color:#FFFFFF">
                             <span class="glyphicon glyphicon-search" ></span>
                         </div>
@@ -56,7 +87,7 @@
                                     <p>
                                         {{items.artist}}
                                     </p>
-                                    <button type="button" ng-click="addToPlaylist(items)" class="btn btn-success" aria-label="Add to Playlist">
+                                    <button type="button" ng-click="addToPlaylist(items)" class="btn btn-success addToPlaylist" aria-label="Add to Playlist">
                                         Add to Playlist <span class="glyphicon glyphicon-plus" aria-hidden="false"></span>
                                     </button>
                                 </div>
@@ -75,7 +106,7 @@
                         </span>
                         <input type="text" class="form-control" placeholder="Enter Playlist Name: " aria-describedby="basic-addon2" ng-model="playlist.playlistName">
                     <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" ng-click="save();">Save</button>
+                        <button class="btn btn-success savelist" type="button" ng-click="save();">Save</button>
                     </span>
                     </div>
                 </div>
